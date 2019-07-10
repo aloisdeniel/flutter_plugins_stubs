@@ -1,0 +1,9 @@
+name: url_launcher_stub
+description: Flutter plugin for launching a URL on Android and iOS. Supports
+  web, phone, SMS, and email schemes.
+author: Aloïs Deniel <alois.deniel@outlook.com>
+homepage: https://github.com/alois_deniel/flutter_plugins_stubs
+version: 5.0.5
+
+environment:
+  sdk: ">=2.1.0 <3.0.0"

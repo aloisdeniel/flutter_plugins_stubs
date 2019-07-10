@@ -1,0 +1,14 @@
+name: shared
+description: A new shared project.
+version: 1.0.0+1
+ 
+environment:
+  sdk: ">=2.1.0 <3.0.0"
+
+dependencies:
+  url_launcher_stub:
+    path: ../../packages/url_launcher_stub
+  connectivity_stub: 
+    path: ../../packages/connectivity_stub
+  change_notifier_stub:
+    path: ../../packages/change_notifier_stub

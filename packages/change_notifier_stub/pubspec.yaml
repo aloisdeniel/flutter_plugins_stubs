@@ -1,0 +1,11 @@
+name: change_notifier_stub
+description: Flutter's change notifier.
+author: Aloïs Deniel <alois.deniel@outlook.com>
+homepage: https://github.com/alois_deniel/flutter_plugins_stubs
+version: 0.1.0
+
+dependencies:
+  meta: 1.1.6
+
+environment:
+  sdk: ">=2.1.0 <3.0.0"

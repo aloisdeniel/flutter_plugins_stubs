@@ -1,0 +1,9 @@
+name: connectivity_stub
+description: Flutter plugin for discovering the state of the network (WiFi &
+  mobile/cellular) connectivity.
+author: Aloïs Deniel <alois.deniel@outlook.com>
+homepage: https://github.com/alois_deniel/flutter_plugins_stubs
+version: 0.4.3+4
+
+environment:
+  sdk: ">=2.1.0 <3.0.0"
