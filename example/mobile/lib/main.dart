@@ -38,8 +38,9 @@ class _HomePageState extends State<HomePage> {
       builder: (context, _) {
         return Column(
           children: <Widget>[
-            Text("Is connected: ${viewModel.isConnected}"),
-            RaisedButton(child: Text("Refresh"), onPressed: () => viewModel.update(),),
+            Text("Is connected: ${viewModel.status}"),
+            RaisedButton(child: Text("Start refresh"), onPressed: () => viewModel.update()),
+            RaisedButton(child: Text("Open Google"), onPressed: () => viewModel.openGoogle()),
           ],
         );
       },

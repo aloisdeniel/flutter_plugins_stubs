@@ -3,15 +3,19 @@ import 'package:change_notifier_stub/change_notifier.dart';
 import 'package:url_launcher_stub/url_launcher.dart';
 
 class HomeViewModel extends ChangeNotifier {
-  bool _isConnected;
+  String _status;
 
-  bool get isConnected => _isConnected;
+  String get status => _status;
 
   Future<void> update() async {
     final state = await Connectivity().checkConnectivity();
-    _isConnected = state != ConnectivityResult.none;
-
+    _status = state?.toString();
     this.notifyListeners();
+
+    Connectivity().onConnectivityChanged.listen((state) {
+      _status = state?.toString();
+      this.notifyListeners();
+    });
   }
 
   Future<void> openGoogle() async {
