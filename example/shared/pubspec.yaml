@@ -8,6 +8,8 @@ environment:
 dependencies:
   url_launcher_stub:
     path: ../../packages/url_launcher_stub
+  shared_preferences_stub: 
+    path: ../../packages/shared_preferences_stub
   connectivity_stub: 
     path: ../../packages/connectivity_stub
   change_notifier_stub:

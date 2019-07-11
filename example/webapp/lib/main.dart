@@ -39,6 +39,7 @@ class _HomePageState extends State<HomePage> {
         return Column(
           children: <Widget>[
             Text("Is connected: ${viewModel.status}"),
+            TextField(controller: TextEditingController(text: viewModel.preferences), onChanged: (v) => viewModel.preferences = v),
             RaisedButton(child: Text("Start refresh"), onPressed: () => viewModel.update()),
             RaisedButton(child: Text("Open Google"), onPressed: () => viewModel.openGoogle()),
           ],

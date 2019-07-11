@@ -21,6 +21,7 @@ dependencies:
     path: ../shared
   connectivity: 0.4.3+4
   url_launcher: 5.0.5
+  shared_preferences: 0.5.3+2
   flutter:
     sdk: flutter
 
