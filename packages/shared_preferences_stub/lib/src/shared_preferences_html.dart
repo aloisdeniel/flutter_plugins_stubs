@@ -19,7 +19,7 @@ class SharedPreferences {
   static SharedPreferences _instance;
   static Future<SharedPreferences> getInstance() async {
     if (_instance == null) {
-      final Map<String, Object> preferencesMap =
+      final Map<String, String> preferencesMap =
           await _getSharedPreferencesMap();
       _instance = SharedPreferences._(preferencesMap);
     }
@@ -34,7 +34,7 @@ class SharedPreferences {
   ///
   /// It is NOT guaranteed that this cache and the device prefs will remain
   /// in sync since the setter method might fail for any reason.
-  final Map<String, Object> _preferenceCache;
+  final Map<String, String> _preferenceCache;
 
   /// Returns all keys in the persistent storage.
   Set<String> getKeys() => Set<String>.from(_preferenceCache.keys);
@@ -44,15 +44,27 @@ class SharedPreferences {
 
   /// Reads a value from persistent storage, throwing an exception if it's not a
   /// bool.
-  bool getBool(String key) => _preferenceCache[key];
+  bool getBool(String key) {
+    final v = _preferenceCache[key];
+    if (v == null) return null;
+    return v == "true";
+  }
 
   /// Reads a value from persistent storage, throwing an exception if it's not
   /// an int.
-  int getInt(String key) => _preferenceCache[key];
+  int getInt(String key) {
+    final v = _preferenceCache[key];
+    if (v == null) return null;
+    return int.parse(v);
+  }
 
   /// Reads a value from persistent storage, throwing an exception if it's not a
   /// double.
-  double getDouble(String key) => _preferenceCache[key];
+  double getDouble(String key) {
+    final v = _preferenceCache[key];
+    if (v == null) return null;
+    return double.parse(v);
+  }
 
   /// Reads a value from persistent storage, throwing an exception if it's not a
   /// String.
@@ -64,23 +76,22 @@ class SharedPreferences {
   /// Reads a set of string values from persistent storage, throwing an
   /// exception if it's not a string set.
   List<String> getStringList(String key) {
-    List<Object> list = _preferenceCache[key];
-    if (list != null && list is! List<String>) {
-      list = list.cast<String>().toList();
-      _preferenceCache[key] = list;
-    }
-    return list;
+    final v = _preferenceCache[key];
+    if (v == null) return null;
+    return v.split("%,%");
   }
 
   /// Saves a boolean [value] to persistent storage in the background.
   ///
   /// If [value] is null, this is equivalent to calling [remove()] on the [key].
-  Future<bool> setBool(String key, bool value) => _setValue('Bool', key, value);
+  Future<bool> setBool(String key, bool value) =>
+      _setValue(key, value?.toString());
 
   /// Saves an integer [value] to persistent storage in the background.
   ///
   /// If [value] is null, this is equivalent to calling [remove()] on the [key].
-  Future<bool> setInt(String key, int value) => _setValue('Int', key, value);
+  Future<bool> setInt(String key, int value) =>
+      _setValue(key, value?.toString());
 
   /// Saves a double [value] to persistent storage in the background.
   ///
@@ -88,24 +99,23 @@ class SharedPreferences {
   ///
   /// If [value] is null, this is equivalent to calling [remove()] on the [key].
   Future<bool> setDouble(String key, double value) =>
-      _setValue('Double', key, value);
+      _setValue(key, value?.toString());
 
   /// Saves a string [value] to persistent storage in the background.
   ///
   /// If [value] is null, this is equivalent to calling [remove()] on the [key].
-  Future<bool> setString(String key, String value) =>
-      _setValue('String', key, value);
+  Future<bool> setString(String key, String value) => _setValue(key, value);
 
   /// Saves a list of strings [value] to persistent storage in the background.
   ///
   /// If [value] is null, this is equivalent to calling [remove()] on the [key].
   Future<bool> setStringList(String key, List<String> value) =>
-      _setValue('StringList', key, value);
+      _setValue(key, value?.join("%,%"));
 
   /// Removes an entry from persistent storage.
-  Future<bool> remove(String key) => _setValue(null, key, null);
+  Future<bool> remove(String key) => _setValue(key, null);
 
-  Future<bool> _setValue(String valueType, String key, Object value) {
+  Future<bool> _setValue(String key, String value) {
     if (value == null) {
       _preferenceCache.remove(key);
       return Future.value(window.localStorage?.remove("$_prefix$key") != null);
